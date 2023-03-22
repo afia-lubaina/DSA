@@ -1,37 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template<class T>
+
 class node {
 public:
-    T data;
-    node<T>* left;
-    node<T>* right;
+    int data;
+    node* left;
+    node* right;
 
     node() {
         left = NULL;
         right = NULL;
     }
 
-    node(node<T>* left, T data, node<T>* right) {
+    node(node* left, int data, node* right) {
         this->data = data;
         this->left = left;
         this->right = right;
     }
 };
 
-template<class T>
+
 class tree {
 public:
-    node<T>* root;
+    node* root;
 
     tree() {
         root = NULL;
     }
 
-    void insertNode(node<T>*& current, T val) {
+    void insertNode(node*& current, int val) {
         if (current == NULL) {
-            current = new node<T>(NULL, val, NULL);
+            current = new node(NULL, val, NULL);
         } else if (val < current->data) {
             insertNode(current->left, val);
         } else {
@@ -39,7 +39,7 @@ public:
         }
     }
 
-    void preorder(node<T>* root) {
+    void preorder(node* root) {
         if (root == NULL)
             return;
         cout << root->data << " ";
@@ -47,7 +47,7 @@ public:
         preorder(root->right);
     }
 
-    void search(node<T>* curr, T key) {
+    void search(node* curr, int key) {
     if (curr == NULL) {
         cout << "Not found\n";
         return;
@@ -61,20 +61,48 @@ public:
     } else {
         search(curr->right, key);
     }
-}
+}   
+
+    int height(node *root){
+        if(root==NULL)
+            return 0; 
+        
+        int lh=height(root->left);
+        int rh=height(root->right);
+
+        return max(rh,lh)+1;
+
+    }
+
+    bool isBalanced(node* root)
+    {
+    int lh;
+    int rh;
+    if (root == NULL)
+        return 1;
+    lh = height(root->left);
+    rh = height(root->right);
+ 
+    if (abs(lh - rh) <= 1 && isBalanced(root->left)
+        && isBalanced(root->right))
+        return 1;
+ 
+    return 0;
+    }
 
 
 };
 
 int main() {
-    tree<int> a;
+    tree a;
     a.insertNode(a.root, 4);
     a.insertNode(a.root, 5);
-    a.insertNode(a.root, 2);
-    a.insertNode(a.root, 9);
-    a.insertNode(a.root, 1);
-    a.insertNode(a.root, 3);
+    a.insertNode(a.root, 7); 
+   // a.insertNode(a.root, 9);
+   // a.insertNode(a.root, 9);
+    //a.insertNode(a.root, 3);
    // a.preorder(a.root);
-    a.search(a.root,89);
+    a.search(a.root,9);
+    cout<<a.isBalanced(a.root)<<"\n";
     return 0;
 }
