@@ -1,0 +1,117 @@
+#include<bits/stdc++.h>
+using namespace std; 
+const int N=1e5;
+
+template<class T>
+class Stack{
+    public:
+
+    T a[N];
+    int top=-1;
+
+    void push(T data){
+        top++;
+        if(top==N)   //overflow
+            return;
+        a[top]=data;
+    }
+
+    void pop(){
+        if(top==-1)
+          return;
+        a[top]='\0';
+        top--;
+    }
+
+    T peek(){
+        
+        if(top==-1)
+            {
+                cout<<"Stack empty"<<"\n";  // empty
+          
+            }
+        return a[top];
+    }
+
+    void print(){
+
+        for (int i = 0; i <=top; i++)  //less or equals
+        {
+            cout<<a[i]<<" ";
+        }
+
+        cout<<"\n";
+        
+    }
+
+    bool empty(){
+        return top==-1;
+    }
+};
+
+void solve(){
+
+    int i=0,j=0; 
+
+    int n,m; cin>>n; 
+    int g[n];
+    for(int k=0; k<n; k++){
+        cin>>g[k];
+    }
+
+    cin>>m;
+    int c[m];
+
+    for (int k= 0; k < m; k++)
+    {
+       cin>>c[k];
+    }
+
+    Stack<int> s;
+
+    j=1;
+   // cout<<g[0]<<"\n";
+    s.push(g[0]);
+
+    while(i!=m){
+
+        while(c[i]!=s.peek() && j!=n){
+            s.push(g[j]);
+            j++;
+        }
+
+     //  cout<<c[i]<<" "<<s.peek()<<"\n";
+
+        while( !s.empty() && c[i]==s.peek() ){
+            s.pop();
+            i++;
+        }
+     //  cout<<c[i]<<" "<<s.peek()<<"\n";
+
+        while(s.empty() && i<m && j<n){
+          s.push(g[j]);
+          j++;
+          if(s.peek()==c[i])
+          s.pop();
+          i++;
+        }
+     // cout<<s.peek()<<"\n";
+
+        if(s.empty() && i==m)
+            break;
+        else if(!s.empty() && s.peek()!=c[i] && j==n)
+            break;
+     
+   }
+
+   if(i==m && s.empty())
+      cout<<"true"<<"\n";
+   else
+        cout<<"false"<<"\n";
+    
+}
+
+int main(){
+
+    solve();
+}
